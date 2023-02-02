@@ -1,6 +1,7 @@
+use std::fmt;
 // https://stackoverflow.com/questions/36928569/how-can-i-create-enums-with-constant-values-in-rust
 
-enum TokenType {
+pub enum TokenType {
     UNKNOWN_TOKEN,
     PLUS,
     MINUS,
@@ -24,7 +25,7 @@ impl TokenType {
 
 // ttype because type is a reserved word
 
-struct Token {
+pub struct Token {
     ttype: TokenType,
     value: i32,
 }
@@ -52,12 +53,13 @@ impl fmt::Display for Token {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Token:\n\tTYPE = {} {}{}",
-            &self.ttype.value(),
-            &self.ttype as i32,
+            //"Token:\n\tTYPE = {} {}{}",
+            "Token:\n\tTYPE = [{}] {}",
+            &self.ttype.value(), // Type of token
+            // TODO: Figure this out self.ttype as i32,   // Index of value in enum
             match &self.ttype {
-                TokenType::INTEGER_LITERAL => "\n\tVALUE = " + &self.value,
-                _ => "",
+                TokenType::INTEGER_LITERAL => format!("\n\tVALUE = {}", &self.value),
+                _ => String::new(),
             }
         )
     }
